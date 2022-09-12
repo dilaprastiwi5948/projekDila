@@ -309,10 +309,10 @@ Website: http://www.webthemez.com/
                         </ul>
                     </li> -->
                     <li>
-                        <a class="active-menu" href="pelaporanDD.html"><i class="fa fa-fw fa-file"></i>Pelaporan Dalam Daerah</a>
+                        <a class="active-menu" href='/pelaporandd'><i class="fa fa-fw fa-file"></i>Pelaporan Dalam Daerah</a>
                     </li>
                     <li>
-                        <a href="pelaporanLD.html"><i class="fa fa-fw fa-file"></i>Pelaporan Luar Daerah</a>
+                        <a href='/pelaporanld'><i class="fa fa-fw fa-file"></i>Pelaporan Luar Daerah</a>
                     </li>
                     <li>
                         <a href="dataPencetakan.html"><i class="fa fa-fw fa-table"></i>Data Pencetakan</a>

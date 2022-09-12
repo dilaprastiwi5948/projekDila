@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OperatorController;
-use App\Http\Controllers\PelaporanDDController;
+use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
@@ -23,7 +23,8 @@ Route::get('/', function () {
 });
 
 Route::resource('operator', MahasiswaController::class);
-Route::get('/pelaporandd', [PelaporanDDController::class, 'index']);
+Route::get('/pelaporandd', [PelaporanController::class, 'pelaporandd']);
+Route::get('/pelaporanld', [PelaporanController::class, 'pelaporanld']);
 
 //login
 Route::get('/login', [LoginController::class, 'index']);
