@@ -20,7 +20,7 @@
                 <div class="card border-0 shadow rounded-3 my-5">
                     <div class="card-body p-4 p-sm-5">
                         <h5 class="card-title text-center mb-5 fw-dark fs-5">Sign In</h5>
-                        <form action="loginMultiRoleSession.php" method="post">
+                        
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="username" placeholder="username" autofocus required>
                                 <label>Username</label>
@@ -36,7 +36,7 @@
                             <div class="d-grid">
                                 <a href="/register"><center>Register</center></a>
                             </div>
-                        </form>
+                        
                     </div>
                 </div>
             </div>

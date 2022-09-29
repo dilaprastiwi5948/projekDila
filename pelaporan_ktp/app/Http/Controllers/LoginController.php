@@ -31,7 +31,7 @@ class LoginController extends Controller
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/pelaporandd');
+            return redirect()->route('pelaporan.create');
         }
         return back()->with('loginError', 'Login gagal');
     }

@@ -23,8 +23,24 @@ Route::get('/', function () {
 });
 
 Route::resource('operator', MahasiswaController::class);
-Route::get('/pelaporandd', [PelaporanController::class, 'pelaporandd']);
-Route::get('/pelaporanld', [PelaporanController::class, 'pelaporanld']);
+
+//registrasi dalam daerah
+// Route::get('/pelaporandd', [PelaporanController::class, 'pelaporandd']);
+// Route::post('/pelaporandd', [PelaporanController::class, 'store']);
+// Route::get('/tampildata', [PelaporanController::class, 'tampildata']);
+// Route::get('/pelaporanld', [PelaporanController::class, 'pelaporanld']);
+
+Route::resource('pelaporan', PelaporanController::class);
+Route::get('/pencarian', [PelaporanController::class, 'pencarian']);
+//Route search
+Route::get('/search', [PelaporanController::class, 'search'])->name('search');
+// Route::get('/pelaporan', [PelaporanController::class, 'index']);
+// Route::get('/pelaporan/tambah',[PelaporanController::class, 'create']);
+// Route::post('/pelaporan/store',[PelaporanController::class, 'store']);
+// Route::get('/pelaporan/edit/{nik_pelapor}',[PelaporanController::class, 'edit']);
+// Route::post('/pelaporan/update',[PelaporanController::class, 'update']);
+// Route::get('/pelaporan/hapus/{nik_pelapor}',[PelaporanController::class, 'destroy']);
+
 
 //login
 Route::get('/login', [LoginController::class, 'index']);

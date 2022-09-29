@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pelapor;
+use Illuminate\Support\Facades\DB;
 
 class PelaporanController extends Controller
 {
@@ -11,13 +13,33 @@ class PelaporanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function pelaporandd()
-    {
-        return view('pelaporan.pelaporanDD');
+    public function index(Request $request)
+    {       
+        // $pelapor = Pelapor::with('users')->get();
+        $pelapor = DB::table('pelapor')->paginate(5);
+        return view('pelaporan.index', compact('pelapor'));
+        // $pelapor = Pelapor::with('users')->get();
+        // $pelapor = Pelapor::orderBy('nik_pelapor', 'desc')->paginate(5); 
+        // return view('pelaporan.index', compact('pelapor')); 
+        // with('i', (request()->input('page', 1) - 1) * 5);
     }
-    public function pelaporanld()
+
+    // public function pelaporanld()
+    // {
+    //     return view('pelaporan.pelaporanLD');
+    // }
+
+    public function pencarian(Request $request)
     {
-        return view('pelaporan.pelaporanLD');
+        $pelapor = DB::table('pelapor')->paginate(5);
+        return view('pencarian.pencarian', compact('pelapor'));
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        $pelapor = Pelapor::where('nama', 'like', "%" . $keyword . "%")->paginate(5);
+        return view('pelaporan.index', compact('pelapor'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -27,7 +49,7 @@ class PelaporanController extends Controller
      */
     public function create()
     {
-        //
+        return view('pelaporan.create');
     }
 
     /**
@@ -38,7 +60,26 @@ class PelaporanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //melakukan validasi data
+        $request->validate([ 
+            'nik_pelapor' => ['required', 'unique:pelapor'],
+            'jenis_pelaporan' => 'required', 
+            'nama' => 'required', 
+            'tanggal_lahir' => 'required', 
+            'alamat' => 'required', 
+            'kelurahan' => 'required', 
+            'kecamatan' => 'required', 
+            'kota' => 'required', 
+            'pengajuan' => 'required', 
+            'keterangan' => 'required',
+        ]);
+        //fungsi eloquent untuk menambah data 
+        Pelapor::create($request->all());
+
+        //jika data berhasil ditambahkan, akan kembali ke halaman utama
+        return redirect()->route('pelaporan.create')
+            ->with('success', 'Data Berhasil Ditambahkan'); 
+
     }
 
     /**
@@ -47,9 +88,12 @@ class PelaporanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($nik_pelapor)
     {
-        //
+        //menampilkan detail data dengan menemukan/berdasarkan nik_operator 
+        $Pelapor = Pelapor::find($nik_pelapor); 
+        return view('pelaporan.detail', compact('Pelapor'));
+
     }
 
     /**
@@ -58,9 +102,11 @@ class PelaporanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($nik_pelapor)
     {
-        //
+        //menampilkan detail data dengan menemukan berdasarkan nik_operator untuk diedit
+        $Pelapor = Pelapor::find($nik_pelapor); 
+        return view('pelaporan.edit', compact('Pelapor'));
     }
 
     /**
@@ -70,9 +116,28 @@ class PelaporanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $nik_pelapor)
     {
-        //
+        //melakukan validasi data
+        $request->validate([ 
+            'nik_pelapor' => 'required', 
+            'jenis_pelaporan' => 'required', 
+            'nama' => 'required', 
+            'tanggal_lahir' => 'required', 
+            'alamat' => 'required', 
+            'kelurahan' => 'required', 
+            'kecamatan' => 'required', 
+            'kota' => 'required', 
+            'pengajuan' => 'required', 
+            'keterangan' => 'required', 
+        ]);
+
+        //fungsi eloquent untuk mengupdate data inputan kita 
+        Pelapor::find($nik_pelapor)->update($request->all());
+
+        //jika data berhasil diupdate, akan kembali ke halaman utama 
+        return redirect()->route('pelaporan.index') 
+            ->with('success', 'Data Berhasil Diupdate');
     }
 
     /**
@@ -81,8 +146,11 @@ class PelaporanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($nik_pelapor)
     {
-        //
+        //fungsi eloquent untuk menghapus data 
+        Pelapor::find($nik_pelapor)->delete(); 
+        return redirect()->route('pelaporan.index') 
+            -> with('success', 'Data Berhasil Dihapus');
     }
 }

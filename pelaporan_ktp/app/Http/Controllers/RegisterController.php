@@ -52,7 +52,7 @@ class RegisterController extends Controller
         //menampilkan pesan
         $request->session()->flash('success', 'Registrasi berhasil');
 
-        return redirect('/pelaporandd');
+        return redirect('/pelaporan');
     } 
 
     /**
